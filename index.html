@@ -12,6 +12,18 @@
       border-color: #25D366;
       box-shadow: 0 0 5px #25D366;
     }
+    .preview {
+      margin-top: 20px;
+      text-align: center;
+    }
+    .preview img {
+      max-width: 100%;
+      height: auto;
+    }
+    .preview p {
+      font-size: 16px;
+      margin-top: 10px;
+    }
   </style>
 </head>
 <body>
@@ -65,6 +77,9 @@
           <button type="button" id="generate-link" class="btn btn-success w-100">Generate WhatsApp Link</button>
         </form>
         <div id="output" class="mt-3 text-center"></div>
+        <div class="preview" id="preview">
+          <!-- Dynamic meta information -->
+        </div>
       </div>
     </div>
   </div>
@@ -74,6 +89,7 @@
   <script>
     const generateButton = document.getElementById("generate-link");
     const outputDiv = document.getElementById("output");
+    const previewDiv = document.getElementById("preview");
 
     generateButton.addEventListener("click", () => {
       const selectedCountryCode = document.getElementById("country-code").value;
@@ -89,11 +105,20 @@
 
       if (!phoneNumber || isNaN(phoneNumber)) {
         outputDiv.innerHTML = "<p class='text-danger'>Please enter a valid phone number.</p>";
+        previewDiv.innerHTML = "";
         return;
       }
 
       const link = `https://wa.me/${countryCode}${phoneNumber}`;
+
+      // Output the WhatsApp link
       outputDiv.innerHTML = `<a href="${link}" target="_blank" class="btn btn-primary w-100">Open WhatsApp Chat</a>`;
+
+      // Update the preview with image and text
+      previewDiv.innerHTML = `
+        <img src="https://via.placeholder.com/600x315?text=WhatsApp+Chat" alt="WhatsApp Chat Preview">
+        <p>Start a WhatsApp chat with <strong>${countryCode}-${phoneNumber}</strong> by clicking the link above.</p>
+      `;
     });
   </script>
 </body>
